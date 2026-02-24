@@ -1,13 +1,13 @@
-# Open Library MCP Server
+# Open Library MCP Server (FastMCP)
 
-This MCP server provides tools to search for books and retrieve metadata from the [Open Library API](https://openlibrary.org/developers/api).
+This MCP server provides tools to search for books and retrieve metadata from the [Open Library API](https://openlibrary.org/developers/api). It is built using the `FastMCP` framework for a clean and efficient implementation.
 
 ## Features
 
 - **Tool: `search_books`**: Search for books by title, author, or keyword.
 - **Tool: `get_book_details`**: Fetch detailed information (description, subjects) for a specific book using its Work ID or ISBN.
 - **Resilience**: Includes connection timeouts and graceful error handling for API failures.
-- **Logging**: Comprehensive logging to `stderr`.
+- **Framework**: Powered by `FastMCP`, providing automatic STDIO transport and error management.
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ npx @modelcontextprotocol/inspector week3/venv/bin/python3 week3/server/app.py
 
 ### Claude Desktop Configuration
 
-Add the following to your Claude Desktop configuration file (e.g., `~/Library/Application\ Support/Claude/claude_desktop_config.json` or `%APPDATA%\Claude\claude_desktop_config.json`):
+Add the following to your Claude Desktop configuration file:
 
 ```json
 {
@@ -58,11 +58,11 @@ Add the following to your Claude Desktop configuration file (e.g., `~/Library/Ap
 ### `search_books`
 - **Arguments**:
   - `query` (string, required): Search term.
-  - `limit` (int, optional): Max results (default: 5).
+  - `limit` (int, default: 5): Max results.
 - **Example**: `search_books(query="The Great Gatsby")`
 
 ### `get_book_details`
 - **Arguments**:
   - `identifier` (string, required): Work ID (e.g., `OL27448W`) or ISBN.
-  - `id_type` (string, optional): `work` or `isbn` (default: `work`).
+  - `id_type` (string, default: "work"): `work` or `isbn`.
 - **Example**: `get_book_details(identifier="OL27448W")`
