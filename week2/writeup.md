@@ -9,11 +9,11 @@ Fill out all of the `TODO`s in this file.
 
 ## SUBMISSION DETAILS
 
-Name: **TODO** \
-SUNet ID: **TODO** \
-Citations: **TODO**
+Name: likefallwind \
+SUNet ID: 2501120036 \
+Citations: gogogo
 
-This assignment took me about **TODO** hours to do. 
+This assignment took me about 1 hours to do. 
 
 
 ## YOUR RESPONSES

@@ -44,7 +44,7 @@ Your task is to implement an **LLM-powered** alternative, `extract_action_items_
 
 Some  tips:
 - To produce structured outputs (i.e. JSON array of strings), refer to this documentation: https://ollama.com/blog/structured-outputs 
-- To browse available Ollama models, refer to this documentation: https://ollama.com/library. Note that larger models will be more resource-intensive, so start small. To pull and run a model: `ollama run {MODEL_NAME}`
+- To browse available Ollama models, refer to this documentation: https://ollama.com/library. To pull and run a model: `ollama run {MODEL_NAME}` . Use qwen3:8b model.
 
 ### TODO 2: Add Unit Tests 
 
