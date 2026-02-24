@@ -7,7 +7,25 @@ load_dotenv()
 NUM_RUNS_TIMES = 5
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """
+Reverse letters in any word.
+
+<example>
+cat -> c-a-t -> tac
+loveable -> l-o-v-e-a-b-l-e -> elbaevol
+interesting -> i-n-t-e-r-e-s-t-i-n-g -> gniitseretni
+status -> s-t-a-t-u-s -> sutats
+http -> h-t-t-p -> ptth
+
+</example>
+
+example with 10 letters ends with "status":
+<example>
+ioaistatus -> i-o-a-i-s-t-a-t-u-s -> sutatsiaoi
+</example>
+
+The input is ONE complete word with 10 letters. Reverse ALL letters backwards.
+"""
 
 USER_PROMPT = """
 Reverse the order of letters in the following word. Only output the reversed word, no other text:

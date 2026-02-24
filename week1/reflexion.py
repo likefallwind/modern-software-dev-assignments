@@ -15,7 +15,17 @@ Keep the implementation minimal.
 """
 
 # TODO: Fill this in!
-YOUR_REFLEXION_PROMPT = ""
+YOUR_REFLEXION_PROMPT = """
+Analyze the failures and fix the code. 
+
+STRICT OUTPUT RULES:
+- Output ONLY a fenced Python code block with ```python
+...
+```
+- Include ONLY the function definition - no print statements, no test code, no comments, no explanations
+- The code must start with "def is_valid_password"
+- Do not add any text before or after the code block
+"""
 
 
 # Ground-truth test suite used to evaluate generated code
@@ -96,7 +106,7 @@ def your_build_reflexion_context(prev_code: str, failures: List[str]) -> str:
 
     Return a string that will be sent as the user content alongside the reflexion system prompt.
     """
-    return ""
+    return f"Previous code:\n{prev_code}\n\nFailures:\n{''.join(f'\n- {f}' for f in failures)}"
 
 
 def apply_reflexion(

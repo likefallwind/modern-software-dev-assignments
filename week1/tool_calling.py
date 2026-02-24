@@ -70,7 +70,15 @@ TOOL_REGISTRY: Dict[str, Callable[..., str]] = {
 # ==========================
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """
+You have access to a tool called "output_every_func_return_type". 
+
+STRICT OUTPUT RULES:
+- You MUST respond with ONLY a valid JSON object
+- No prose, no explanations, no code fences, no markdown formatting
+- Example valid response: {"tool": "output_every_func_return_type"}
+- Always output valid JSON that can be parsed by json.loads()
+"""
 
 
 def resolve_path(p: str) -> str:
@@ -86,6 +94,7 @@ def resolve_path(p: str) -> str:
 
 def extract_tool_call(text: str) -> Dict[str, Any]:
     """Parse a single JSON object from the model output."""
+    print(text)
     text = text.strip()
     # Some models wrap JSON in code fences; attempt to strip
     if text.startswith("```") and text.endswith("```"):

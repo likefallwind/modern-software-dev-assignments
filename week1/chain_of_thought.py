@@ -5,10 +5,10 @@ from ollama import chat
 
 load_dotenv()
 
-NUM_RUNS_TIMES = 5
+NUM_RUNS_TIMES = 10
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = "When given a math problem, solve it step-by-step, then give the final answer on the last line as 'Answer: <number>'."
 
 
 USER_PROMPT = """
