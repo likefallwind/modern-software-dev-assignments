@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import os
+import json
 import re
 from typing import List
-import json
-from typing import Any
-from ollama import chat
+
 from dotenv import load_dotenv
+from ollama import chat
 
 load_dotenv()
 
@@ -92,8 +91,8 @@ def _looks_imperative(sentence: str) -> bool:
 def extract_action_items_llm(text: str, model: str = "qwen3:8b") -> List[str]:
     if not text.strip():
         return []
-    
-    prompt = f"""Extract all action items from the following text. 
+
+    prompt = f"""Extract all action items from the following text.
 An action item is a task, todo, or thing that needs to be done.
 Return ONLY a JSON array of strings, with each action item as a separate string.
 If no action items are found, return an empty array [].
@@ -114,18 +113,18 @@ Response (JSON array only):"""
             ],
             format={"type": "array", "items": {"type": "string"}},
         )
-        
+
         extracted = response.message.content
-        
+
         if isinstance(extracted, list):
             return extracted
-        
+
         parsed = json.loads(extracted)
         if isinstance(parsed, list):
             return [str(item) for item in parsed]
-        
+
         return []
-        
+
     except Exception as e:
         print(f"Error extracting action items with LLM: {e}")
         return []

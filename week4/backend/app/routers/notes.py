@@ -1,12 +1,14 @@
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from ..db import get_db
 from ..models import Note
-from ..schemas import NoteCreate, NoteRead
+from ..schemas import NoteCreate, NoteRead, NoteUpdate
+from ..services.extract import extract_action_items
 
 router = APIRouter(prefix="/notes", tags=["notes"])
 
@@ -32,7 +34,9 @@ def search_notes(q: Optional[str] = None, db: Session = Depends(get_db)) -> list
         rows = db.execute(select(Note)).scalars().all()
     else:
         rows = (
-            db.execute(select(Note).where((Note.title.contains(q)) | (Note.content.contains(q))))
+            db.execute(
+                select(Note).where((Note.title.ilike(f"%{q}%")) | (Note.content.ilike(f"%{q}%")))
+            )
             .scalars()
             .all()
         )
@@ -45,3 +49,35 @@ def get_note(note_id: int, db: Session = Depends(get_db)) -> NoteRead:
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
     return NoteRead.model_validate(note)
+
+
+@router.put("/{note_id}", response_model=NoteRead)
+def update_note(note_id: int, payload: NoteUpdate, db: Session = Depends(get_db)) -> NoteRead:
+    note = db.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
+    if payload.title is not None:
+        note.title = payload.title
+    if payload.content is not None:
+        note.content = payload.content
+    db.flush()
+    db.refresh(note)
+    return NoteRead.model_validate(note)
+
+
+@router.delete("/{note_id}", status_code=204)
+def delete_note(note_id: int, db: Session = Depends(get_db)) -> Response:
+    note = db.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
+    db.delete(note)
+    db.flush()
+    return Response(status_code=204)
+
+
+@router.post("/{note_id}/extract")
+def extract_note(note_id: int, db: Session = Depends(get_db)) -> dict:
+    note = db.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
+    return extract_action_items(note.content)

@@ -1,6 +1,4 @@
-import os
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from ..app.services.extract import extract_action_items, extract_action_items_llm
 
@@ -16,11 +14,7 @@ def test_extract_bullets_and_checkboxes():
 
     items = extract_action_items(text)
     # Strengthen assertions: check for exact matches and expected count
-    expected = [
-        "Set up database",
-        "implement API extract endpoint",
-        "Write tests"
-    ]
+    expected = ["Set up database", "implement API extract endpoint", "Write tests"]
     assert items == expected
 
 
@@ -46,7 +40,7 @@ def test_extract_deduplication():
     - TASK B
     - Task C
     """.strip()
-    
+
     items = extract_action_items(text)
     assert items == ["Task A", "Task B", "Task C"]
 
@@ -74,7 +68,7 @@ def test_extract_action_items_llm_returns_list(mock_chat):
 
     text = "Meeting notes: - Buy groceries * Finish the report"
     items = extract_action_items_llm(text)
-    
+
     assert isinstance(items, list)
     assert items == ["Buy groceries", "Finish the report"]
     mock_chat.assert_called_once()

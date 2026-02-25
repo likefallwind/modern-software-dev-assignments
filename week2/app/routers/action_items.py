@@ -6,13 +6,12 @@ from fastapi import APIRouter, HTTPException, status
 
 from .. import db
 from ..schemas import (
+    ActionItemResponse,
     ExtractRequest,
     ExtractResponse,
-    ActionItemResponse,
     MarkDoneRequest,
 )
 from ..services.extract import extract_action_items, extract_action_items_llm
-
 
 router = APIRouter(prefix="/action-items", tags=["action-items"])
 

@@ -1,6 +1,6 @@
-import os
 import re
 from typing import Callable, List, Tuple
+
 from dotenv import load_dotenv
 from ollama import chat
 
@@ -16,7 +16,7 @@ Keep the implementation minimal.
 
 # TODO: Fill this in!
 YOUR_REFLEXION_PROMPT = """
-Analyze the failures and fix the code. 
+Analyze the failures and fix the code.
 
 STRICT OUTPUT RULES:
 - Output ONLY a fenced Python code block with ```python

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List
 
 from fastapi import APIRouter, HTTPException, status
 
@@ -8,12 +8,7 @@ from .. import db
 from ..schemas import (
     NoteCreate,
     NoteResponse,
-    ExtractRequest,
-    ExtractResponse,
-    ActionItemResponse,
-    MarkDoneRequest,
 )
-
 
 router = APIRouter(prefix="/notes", tags=["notes"])
 
